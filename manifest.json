@@ -8,8 +8,10 @@
       "default_popup": "popup.html"
     },
     "permissions": [
+        "storage",
         "webRequest",
         "webRequestBlocking",
+        "tabs",
         "*://*.google.com/*"
     ],
     "icons": {

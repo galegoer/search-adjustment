@@ -1,4 +1,4 @@
-document.getElementById("detailsBtn").addEventListener("click", function () {
+document.getElementById("saveBtn").addEventListener("click", function () {
     const patElement = document.getElementById("pat");
     const pat = patElement.value;
 
@@ -16,9 +16,19 @@ document.getElementById("detailsBtn").addEventListener("click", function () {
         console.log('one of the params is empty');
         return;
     }
-    chrome.storage.sync.set({ "pat": pat, "repoPath": repoPath, "owner": owner }, () => {
+    chrome.storage.local.set({ "pat": pat, "repoPath": repoPath, "owner": owner }, () => {
         console.log('Added to browser storage');
     });
     // TODO: add success popup
 });
 
+document.getElementById("ai-search").addEventListener("click", function () {
+    const isOn = this.classList.contains("on");
+    this.classList.toggle("on", !isOn);
+    this.classList.toggle("off", isOn);
+    this.textContent = isOn ? "Off" : "On";
+
+    chrome.storage.local.set({ "ai-search": isOn }, () => {
+        console.log('Added to browser storage');
+    });
+});
