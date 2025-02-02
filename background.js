@@ -2,7 +2,6 @@
  * Listens for outgoing requests to Google and modifies the query parameter.
 */
 
-// chrome.declarativeNetRequest.onRuleMatchedDebug.addListener(async (e) => {
 chrome.webRequest.onBeforeRequest.addListener( async (e) => {
     const url = new URL(e.url);
     // // Check if the request has already been processed
@@ -18,10 +17,10 @@ chrome.webRequest.onBeforeRequest.addListener( async (e) => {
         console.log("Keywords", keywords);
         if (!currentQuery.includes(keywords)) {
             console.log("currentQuery", currentQuery);
-            const modifiedQuery = `${currentQuery} ${keywords}`; // Replace 'yourKeyword' with your desired keyword
+            const modifiedQuery = `${currentQuery} ${keywords}`;
             url.searchParams.set("q", modifiedQuery);
 
-            return { redirectUrl: url.toString() }; // Redirect to the modified URL
+            return { redirectUrl: url.toString() };
         } else {
             console.log('here');
             return;
@@ -37,10 +36,18 @@ chrome.webRequest.onBeforeRequest.addListener( async (e) => {
 async function getKeywords() {
     return new Promise(resolve => {
         let keywords = [];
-        chrome.storage.local.get(['ai-search'], items => {
+        chrome.storage.local.get(['ai-search-off', 'custom-search', "yt-music", "reddit", "exclude"], items => {
             console.log("items", items);
-            let result = items['ai-search'] ? "" : "-ai";
-            resolve(result);
+            items['custom-search'] && keywords.push(items['custom-search']);
+            if (items['exclude']) {
+                keywords.push(items['exclude'].split(" ").map(word=> "-"+word).join(" "));
+            }
+            items['ai-search-off'] && keywords.push("-ai");
+            // TODO: Add or if it's both
+            items["yt-music"] && keywords.push("site:music.youtube.com");
+            items["reddit"] && keywords.push("site:reddit.com");
+            console.log("keywords", keywords);
+            resolve(keywords.join(" "));
         });
     })
 }

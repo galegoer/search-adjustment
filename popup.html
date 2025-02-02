@@ -22,18 +22,40 @@
         <br />
 
         <div id="auth_details">
-            <label for="ai-search">AI Search</label>
+            <label for="ai-search-off">AI Search</label>
             <label class="switch switch-left-right">
-              <button class="ui toggle button on" id="ai-search">On</button>
+              <button class="ui toggle button on" id="ai-search-off">On</button>
             </label>
             <br/>
+
+            <label for="yt-music">YouTube Music Search</label>
+            <label class="switch switch-left-right">
+              <button class="ui toggle button" id="yt-music">Off</button>
+            </label>
+            <br/>
+
+            <label for="reddit">Reddit Search</label>
+            <label class="switch switch-left-right">
+              <button class="ui toggle button" id="reddit">Off</button>
+            </label>
+            <br/>
+
+            <div>Note: You only need to save for the custom search parameters</div>
             
             <label for="custom-search">Custom Search</label>
             <label class="switch switch-left-right">
-              <textarea class="ui " id="custom-search"></textarea>
+              <input type="text" class="ui" id="custom-search"></input>
             </label>
             <br/>
+
+            <label for="exclude">Exclude Words (Separate with Space)</label>
+            <label class="switch switch-left-right">
+              <input type="text" class="ui" id="exclude"></input>
+            </label>
+            <br/>
+
             <button id="saveBtn" type="button">Save</button>
+            <button id="resetBtn" type="button">Reset</button>
         </div>
       </div>
 
